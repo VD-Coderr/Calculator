@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+  <script src="script.js" defer></script>
+  <title>Document</title>
+</head>
+<body>
+    <main id="calculator-body">
+      <div id="display">
+        <p id="last-calculation">123</p>
+        <p id="current-culculation">12343</p>
+      </div>
+
+      <div class="controls">
+        <button id="clear">Clear</button>
+        <button id="delete">Delete</button>
+      </div>
+
+      <div class="numpad">
+        <div class="num">
+          <button class="numeric btn" data-value="7">7</button>
+          <button class="numeric btn" data-value="8">8</button>
+          <button class="numeric btn" data-value="9">9</button>
+          <button class="numeric btn" data-value="4">4</button>
+          <button class="numeric btn" data-value="5">5</button>
+          <button class="numeric btn" data-value="6">6</button>
+          <button class="numeric btn" data-value="1">1</button>
+          <button class="numeric btn" data-value="2">2</button>
+          <button class="numeric btn" data-value="3">3</button>
+          <button class="numeric btn" data-value=".">.</button>
+          <button class="numeric btn" data-value="0">0</button>
+          <button class="numeric btn" data-value="=">=</button>
+        </div>
+
+        <div class="operators">
+          <button class="operator btn">/</button>
+          <button class="operator btn">*</button>
+          <button class="operator btn">-</button>
+          <button class="operator btn">+</button>
+        </div>
+      </div>
+    </main>
+  
+  <footer class="footer">
+    <p>
+      Copyright ©
+      <script>
+        document.write(new Date().getFullYear())
+      </script>
+      <a href="https://github.com/VD-Coderr">VD-Coderr</a>
+    </p>
+  </footer>
+  
+</body>
+</html>
