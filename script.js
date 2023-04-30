@@ -5,12 +5,13 @@ const numberBtns = document.querySelectorAll('.numeric');
 const operatorBtns = document.querySelectorAll('.operator');
 const operatorDisplay = document.querySelector('#operator-display')
 const equalBtn = document.querySelector('#equal');
+const clearBtn = document.querySelector('#clear');
+const deleteBtn = document.querySelector('#delete');
 
 let num1;
 let num2;
 let total;
 let operator;
-let toRemove = false;
 
 // document.addEventListener('keydown', (e) => {
 //   const regex = /\d|[\/\*\-\+\=]/g;
@@ -22,53 +23,83 @@ let toRemove = false;
 
 numberBtns.forEach(button => {
   button.addEventListener('click', () => {
-  
+    if (total) { clear() }
+    currentCalc.textContent += button.textContent;
   })
 });
 
 operatorBtns.forEach(button => {
   button.addEventListener('click', () => {
-
+    if (!num1) {
+      num1 = currentCalc.textContent;
+    } else if (currentCalc.textContent){
+      num2 = currentCalc.textContent;
+      num1 = operate(operator);
+    }
+    currentCalc.textContent = undefined
+    operator = button.textContent;
+    lastCalc.textContent = `${num1} ${operator} `;
   })
 });
 
 equalBtn.addEventListener('click', () => {
-
+  num2 = currentCalc.textContent;
+  total = operate(operator);
+  lastCalc.textContent = `${num1} ${operator} ${num2}`;
+  currentCalc.textContent = total;
 });
 
+clearBtn.addEventListener('click', clear)
+deleteBtn.addEventListener('click', deleteFunction)
+
+function clear() {
+  num1 = 0;
+  num2 = 0;
+  total = 0;
+  operator = null;
+  currentCalc.textContent = null;
+  lastCalc.textContent = null;
+}
+
+function deleteFunction() {
+  string = currentCalc.textContent.split('');
+  string.pop();
+  currentCalc.textContent = string.join('');
+}
+
 function divide(a, b) {
-  total = a / b;
-  return total
+  if (b > 0) {
+  return a / b;
+  } else {
+    return 'Cannot divide by zero';
+  }
 }
 
 function multiply(a, b) {
-  total = a * b;
-  return total
+  return a * b;
 }
 
 function substract(a, b) {
-  total = a - b;
-  return total
+  return a - b;
 }
 
 function add(a, b) {
-  total = a + b;
-  return total;
+  return a + b;
 }
 
 function operate(operator) {
-switch (operator) {
+switch(operator) {
   case '/':
-    currentCalc.textContent = divide(num1,num2);
+    return divide(num1,num2);
     break;
   case '*':
-    currentCalc.textContent = multiply(num1, num2);
+    return multiply(num1, num2);
     break;
   case '-':
-    currentCalc.textContent = substract(num1, num2);
+    return substract(num1, num2);
     break;
   case '+':
-    currentCalc.textContent = add(num1, num2);
+    return add(num1, num2);
     break;
   default:
     break;
