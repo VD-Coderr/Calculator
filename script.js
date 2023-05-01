@@ -13,52 +13,50 @@ let num2;
 let total;
 let operator;
 
+// keyboard handler
 document.addEventListener('keydown', (e) => {
-  const keyNumber = e.key.match(/\d/g);
-  const keyOperator = /[\/\*\-\+\=\.]/g
+  const keyNumber = e.key.match(/[.\d]/g);
+  const keyOperator = e.key.match(/[\/\*\-\+\=]/g);
   if (e.key == 'Enter') {
     inputEqual();
+  } else if (e.key == 'Backspace') {
+    removeLastChar();
+  } else if (e.key == 'Escape') {
+    clear();
   } else if (keyNumber) {
-    inputKeyNumber(e.key)
+    inputNumber(e);
   } else if (keyOperator) {
     operator = e.key
     inputOperator();
   }
 });
 
-function inputKeyNumber(key) {
-  if (total) {clear()}
-  if (key == '.' && currentCalc.textContent.includes('.')) {return}
-  currentCalc.textContent += key;
-}
-
-function inputKeyOperator(key) {
-  inputOperator()
-  operator = key;
-}
-
+// numbers eventListener (mouse)
 numberBtns.forEach(button => {
   button.addEventListener('click', () => {
     inputNumber(button)
   })
 });
 
+// operator eventListener (mouse)
 operatorBtns.forEach(button => {
   button.addEventListener('click', () => {
     operator = button.textContent;
     inputOperator()
-
   })
 });
 
+// eqaul eventListener (mouse)
 equalBtn.addEventListener('click', inputEqual);
 
-function inputNumber(btn) {
+// register Number input for mouse and Keyboard
+function inputNumber(e) {
   if(total) {clear()}
-  if(btn.textContent == '.' && currentCalc.textContent.includes('.')) {return}
-  currentCalc.textContent += btn.textContent;
+  if((e.key == '.' || e.textContent == '.') && currentCalc.textContent.includes('.')) {return}
+  currentCalc.textContent += e.key || e.textContent;
 }
 
+// register operator input for mouse and keyboard
 function inputOperator() {
   if (!num1) {
     num1 = currentCalc.textContent;
@@ -74,6 +72,7 @@ function inputOperator() {
   lastCalc.textContent = `${num1} ${operator} `;
 }
 
+// register equal input for mouse and keyboard
 function inputEqual() {
   num2 = currentCalc.textContent;
   total = operate(operator);
@@ -81,8 +80,9 @@ function inputEqual() {
   currentCalc.textContent = total;
 }
 
+// clear and delete eventListeneres for mouse
 clearBtn.addEventListener('click', clear)
-deleteBtn.addEventListener('click', deleteFunction)
+deleteBtn.addEventListener('click', removeLastChar)
 
 function clear() {
   num1 = 0;
@@ -93,12 +93,13 @@ function clear() {
   lastCalc.textContent = null;
 }
 
-function deleteFunction() {
+function removeLastChar() {
   string = currentCalc.textContent.split('');
   string.pop();
   currentCalc.textContent = string.join('');
 }
 
+// Math functions:
 function divide(a, b) {
   if (b > 0) {
   return Number(a) / Number(b);
@@ -119,6 +120,7 @@ function add(a, b) {
   return Number(a) + Number(b);
 }
 
+// function to operate a Math based on operator chosen and return a result
 function operate(operator) {
 switch(operator) {
   case '/':

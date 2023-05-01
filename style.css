@@ -6,7 +6,6 @@
 
 html {
   box-sizing: border-box;
-  font-family: 'Delicious Handrawn', cursive;
   color: white;
   background: #355C7D;  /* fallback for old browsers */
   background: -webkit-linear-gradient(to right, #C06C84, #6C5B7B, #355C7D);  /* Chrome 10-25, Safari 5.1-6 */
@@ -46,10 +45,11 @@ body {
   background-color: #564c5f;
   display: grid;
   grid-template-rows: 1fr 1fr;
+  justify-content: end;
   justify-items: end;
-  align-items: center;
   padding: 0 0.5rem;
   font-size: 1.75rem;
+  overflow-x: hidden;
 }
 
 #last-calculation {
