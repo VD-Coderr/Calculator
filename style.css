@@ -115,3 +115,10 @@ footer a {
   text-decoration: none;
   color: inherit;
 }
+
+@media (max-width: 450px) {
+  #calculator-body {
+    width: 330px;
+    height: 500px;
+  }
+}
