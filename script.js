@@ -13,41 +13,73 @@ let num2;
 let total;
 let operator;
 
-// document.addEventListener('keydown', (e) => {
-//   const regex = /\d|[\/\*\-\+\=]/g;
-//   keyboardInput = e.key.match(regex);
-//   if (e.key == 'Enter') { console.log(e.key) }
-//   else if (keyboardInput) {
-//   console.log(keyboardInput)
-// }})
+document.addEventListener('keydown', (e) => {
+  const keyNumber = e.key.match(/\d/g);
+  const keyOperator = /[\/\*\-\+\=\.]/g
+  if (e.key == 'Enter') {
+    inputEqual();
+  } else if (keyNumber) {
+    inputKeyNumber(e.key)
+  } else if (keyOperator) {
+    operator = e.key
+    inputOperator();
+  }
+});
+
+function inputKeyNumber(key) {
+  if (total) {clear()}
+  if (key == '.' && currentCalc.textContent.includes('.')) {return}
+  currentCalc.textContent += key;
+}
+
+function inputKeyOperator(key) {
+  inputOperator()
+  operator = key;
+}
 
 numberBtns.forEach(button => {
   button.addEventListener('click', () => {
-    if (total) { clear() }
-    currentCalc.textContent += button.textContent;
+    inputNumber(button)
   })
 });
 
 operatorBtns.forEach(button => {
   button.addEventListener('click', () => {
-    if (!num1) {
-      num1 = currentCalc.textContent;
-    } else if (currentCalc.textContent){
-      num2 = currentCalc.textContent;
-      num1 = operate(operator);
-    }
-    currentCalc.textContent = undefined
     operator = button.textContent;
-    lastCalc.textContent = `${num1} ${operator} `;
+    inputOperator()
+
   })
 });
 
-equalBtn.addEventListener('click', () => {
+equalBtn.addEventListener('click', inputEqual);
+
+function inputNumber(btn) {
+  if(total) {clear()}
+  if(btn.textContent == '.' && currentCalc.textContent.includes('.')) {return}
+  currentCalc.textContent += btn.textContent;
+}
+
+function inputOperator() {
+  if (!num1) {
+    num1 = currentCalc.textContent;
+  } else if (currentCalc.textContent){
+    if(total) {
+      num1 = total;
+      total = undefined;
+    } else {
+      num2 = currentCalc.textContent;
+      num1 = operate(operator);
+  }}
+  currentCalc.textContent = undefined;
+  lastCalc.textContent = `${num1} ${operator} `;
+}
+
+function inputEqual() {
   num2 = currentCalc.textContent;
   total = operate(operator);
   lastCalc.textContent = `${num1} ${operator} ${num2}`;
   currentCalc.textContent = total;
-});
+}
 
 clearBtn.addEventListener('click', clear)
 deleteBtn.addEventListener('click', deleteFunction)
@@ -69,22 +101,22 @@ function deleteFunction() {
 
 function divide(a, b) {
   if (b > 0) {
-  return a / b;
+  return Number(a) / Number(b);
   } else {
     return 'Cannot divide by zero';
   }
 }
 
 function multiply(a, b) {
-  return a * b;
+  return Number(a) * Number(b);
 }
 
 function substract(a, b) {
-  return a - b;
+  return Number(a) - Number(b);
 }
 
 function add(a, b) {
-  return a + b;
+  return Number(a) + Number(b);
 }
 
 function operate(operator) {
