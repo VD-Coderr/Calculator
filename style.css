@@ -111,6 +111,7 @@ footer {
 }
 
 footer a {
+  font-family: Courier;
   text-decoration: none;
   color: inherit;
 }
